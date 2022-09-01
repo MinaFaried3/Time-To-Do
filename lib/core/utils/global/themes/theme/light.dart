@@ -10,6 +10,8 @@ class LightTheme extends Equatable {
     backgroundColor: Colors.white,
     brightness: Brightness.light,
     appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.white,
+      iconTheme: IconThemeData(color: AppColor.primaryClr),
       titleTextStyle: TextStyle(color: Colors.black),
       systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.white,
@@ -24,25 +26,39 @@ class LightTheme extends Equatable {
           fontSize: 24,
         ),
       ),
+      headline4: GoogleFonts.lato(
+        textStyle: const TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+          fontSize: 21,
+        ),
+      ),
       bodyText1: GoogleFonts.lato(
         textStyle: const TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.w400,
-          fontSize: 14,
+          fontSize: 18,
         ),
       ),
       bodyText2: GoogleFonts.lato(
         textStyle: TextStyle(
-          color: Colors.grey[200],
+          color: Colors.grey[700],
           fontWeight: FontWeight.w400,
-          fontSize: 14,
+          fontSize: 16,
         ),
       ),
       subtitle1: GoogleFonts.lato(
         textStyle: const TextStyle(
-          color: Colors.black,
+          color: Colors.grey,
           fontWeight: FontWeight.bold,
-          fontSize: 24,
+          fontSize: 16,
+        ),
+      ),
+      subtitle2: GoogleFonts.lato(
+        textStyle: const TextStyle(
+          color: Colors.grey,
+          fontWeight: FontWeight.bold,
+          fontSize: 12,
         ),
       ),
     ),
