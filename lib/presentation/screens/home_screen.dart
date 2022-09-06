@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_clean_architecture/core/utils/global/shared/size_config.dart';
-import 'package:todo_clean_architecture/presentation/components/button.dart';
-import 'package:todo_clean_architecture/presentation/screens/add_task_screen.dart';
 
 import '../../core/utils/global/themes/theme_sevice.dart';
-import 'notification_screen.dart';
+import '../components/avatat.dart';
+import '../components/home_screen_widgets/date_piker_bar.dart';
+import '../components/home_screen_widgets/task_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -20,29 +20,25 @@ class _HomeScreenState extends State<HomeScreen> {
     SizeConfig().init(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("hello"),
+        actions: const [Avatar()],
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: Icon(Get.isDarkMode ? Icons.dark_mode_outlined : Icons.light),
           onPressed: () {
             ThemeService().switchTheme();
-            Get.to(const NotificationScreen(
-              payload: "title|description|10:30",
-            ));
+            setState(() {});
           },
         ),
       ),
-      body: SizedBox(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              MyButton(
-                label: 'add task',
-                onTap: () {
-                  Get.to(const AddTaskScreen());
-                },
+              TaskBar(),
+              SizedBox(
+                height: 15,
               ),
+              DatePikerBar()
             ],
           ),
         ),

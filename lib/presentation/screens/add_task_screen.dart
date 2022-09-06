@@ -5,6 +5,7 @@ import 'package:todo_clean_architecture/core/utils/global/themes/colors/colors.d
 import 'package:todo_clean_architecture/presentation/components/button.dart';
 import 'package:todo_clean_architecture/presentation/controller/task_conroller.dart';
 
+import '../components/avatat.dart';
 import '../components/input_filed.dart';
 
 class AddTaskScreen extends StatefulWidget {
@@ -40,21 +41,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("build");
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(Icons.arrow_back_ios),
-        ),
-        title: Text(
-          "Add Task",
-          style: Theme.of(context).textTheme.headline3,
-        ),
-        centerTitle: true,
-      ),
+      appBar: buildAppBar(context),
       body: Theme(
         data: Theme.of(context)
             .copyWith(iconTheme: const IconThemeData(color: Colors.grey)),
@@ -190,6 +178,23 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+      leading: IconButton(
+        onPressed: () {
+          Get.back();
+        },
+        icon: const Icon(Icons.arrow_back_ios),
+      ),
+      title: Text(
+        "Add Task",
+        style: Theme.of(context).textTheme.headline3,
+      ),
+      centerTitle: true,
+      actions: const [Avatar()],
     );
   }
 

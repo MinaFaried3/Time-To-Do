@@ -6,18 +6,18 @@ class ThemeService {
   final GetStorage _box = GetStorage();
   final String _key = "isDarKMode";
 
-  void _saveThemeToBox({required bool isDark}) {
-    _box.write(_key, isDark);
+  Future<void> _saveThemeToBox({required bool isDark}) async {
+    await _box.write(_key, isDark);
   }
 
   bool _loadThemeFromBox() {
-    return _box.read<bool>(_key) ?? false;
+    return _box.read<bool>(_key) ?? true;
   }
 
   ThemeMode get theme => _loadThemeFromBox() ? ThemeMode.dark : ThemeMode.light;
 
-  void switchTheme() {
+  Future<void> switchTheme() async {
     Get.changeThemeMode(_loadThemeFromBox() ? ThemeMode.light : ThemeMode.dark);
-    _saveThemeToBox(isDark: !_loadThemeFromBox());
+    await _saveThemeToBox(isDark: !_loadThemeFromBox());
   }
 }

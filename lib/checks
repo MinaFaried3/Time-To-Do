@@ -1,1 +1,8 @@
 change app icon
+change decoration of drop down menu
+shared preferences
+setstate in home screen
+create getter for theme for all app
+create getter setter for theme use case
+init date picker
+shadow datePiker in white theme
