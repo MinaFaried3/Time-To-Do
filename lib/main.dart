@@ -8,11 +8,13 @@ import 'package:todo_clean_architecture/core/utils/global/themes/theme/light.dar
 import 'package:todo_clean_architecture/core/utils/global/themes/theme_sevice.dart';
 import 'package:todo_clean_architecture/presentation/screens/home_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     systemNavigationBarColor: AppColor.darkGreyClr, // navigation bar color
     // status bar color
   ));
+  // await NotificationService().initializeNotification();
   runApp(const MyApp());
 }
 

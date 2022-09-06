@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo_clean_architecture/core/utils/global/notification/notification_service.dart';
 import 'package:todo_clean_architecture/core/utils/global/shared/size_config.dart';
+import 'package:todo_clean_architecture/presentation/components/home_screen_widgets/show_tasks.dart';
 
 import '../../core/utils/global/themes/theme_sevice.dart';
 import '../components/avatat.dart';
@@ -15,6 +17,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late NotificationService notificationService;
+  @override
+  void initState() {
+    super.initState();
+    notificationService = NotificationService();
+    notificationService.requestIOSPermissions();
+    notificationService.initializeNotification();
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -26,19 +37,27 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () {
             ThemeService().switchTheme();
             setState(() {});
+            NotificationService()
+                .displayNotification(title: "Theme changed", body: "body");
+            NotificationService().scheduledNotification();
           },
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
               TaskBar(),
               SizedBox(
                 height: 15,
               ),
-              DatePikerBar()
+              DatePikerBar(),
+              SizedBox(
+                height: 15,
+              ),
+              ShowTasks()
             ],
           ),
         ),
