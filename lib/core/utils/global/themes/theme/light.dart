@@ -50,14 +50,13 @@ class LightTheme extends Equatable {
       subtitle1: GoogleFonts.lato(
         textStyle: const TextStyle(
           color: Colors.grey,
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
+          fontSize: 14,
         ),
       ),
       subtitle2: GoogleFonts.lato(
         textStyle: const TextStyle(
           color: Colors.grey,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w400,
           fontSize: 12,
         ),
       ),

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_clean_architecture/core/utils/global/notification/notification_service.dart';
 import 'package:todo_clean_architecture/core/utils/global/shared/size_config.dart';
-import 'package:todo_clean_architecture/presentation/components/home_screen_widgets/show_tasks.dart';
 
 import '../../core/utils/global/themes/theme_sevice.dart';
 import '../components/avatat.dart';
 import '../components/home_screen_widgets/date_piker_bar.dart';
+import '../components/home_screen_widgets/show_tasks.dart';
 import '../components/home_screen_widgets/task_bar.dart';
 
 class HomeScreen extends StatefulWidget {
