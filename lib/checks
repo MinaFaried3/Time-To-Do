@@ -9,3 +9,6 @@ shadow datePiker in white theme
 Equatable all
 Task in schedule Notification repleace with TaskModel
 add special effects to the completed tasks
+remove padding from date picker
+singleton notification show tasks
+icon dark light theme

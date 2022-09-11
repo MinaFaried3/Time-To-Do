@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:todo_clean_architecture/core/utils/global/themes/colors/colors.dart';
 import 'package:todo_clean_architecture/core/utils/global/themes/theme/dark.dart';
 import 'package:todo_clean_architecture/core/utils/global/themes/theme/light.dart';
@@ -14,7 +15,7 @@ void main() async {
     systemNavigationBarColor: AppColor.darkGreyClr, // navigation bar color
     // status bar color
   ));
-  // await NotificationService().initializeNotification();
+  await GetStorage.init();
   runApp(const MyApp());
 }
 

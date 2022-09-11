@@ -1,24 +1,72 @@
 import 'package:flutter/material.dart';
-import 'package:todo_clean_architecture/core/utils/global/shared/size_config.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
+import 'package:todo_clean_architecture/core/utils/global/shared/shared.dart';
 import 'package:todo_clean_architecture/data/model/task_model.dart';
 import 'package:todo_clean_architecture/presentation/components/task_tile.dart';
+import 'package:todo_clean_architecture/presentation/controller/task_conroller.dart';
 
-class ShowTasks extends StatelessWidget {
+import '../../../core/utils/global/notification/notification_service.dart';
+import 'bottom_sheet.dart';
+
+class ShowTasks extends StatefulWidget {
   const ShowTasks({Key? key}) : super(key: key);
+
+  @override
+  State<ShowTasks> createState() => _ShowTasksState();
+}
+
+class _ShowTasksState extends State<ShowTasks> {
+  final TaskController taskController = Get.put(TaskController());
+
+  late NotificationService notificationService;
+  @override
+  void initState() {
+    super.initState();
+    notificationService = NotificationService();
+    notificationService.requestIOSPermissions();
+    notificationService.initializeNotification();
+  }
 
   @override
   Widget build(BuildContext context) {
     var themes = Theme.of(context);
-    bool orientation = SizeConfig.orientation == Orientation.landscape;
-    return TaskTile(
-      TaskModel(
-          color: 1,
-          endTime: "2:00 pm",
-          startTime: "2:00 pm",
-          isCompleted: 1,
-          note:
-              "vipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisv",
-          title: "Mina "),
+    late var date;
+    late int minute;
+    late int hour;
+    late TaskModel task;
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        task = taskController.tasks[index];
+        date = DateFormat.jm().parse(task.startTime!);
+        hour = int.parse(
+            DateFormat("HH:mm").format(date).toString().split(':')[0]);
+        minute = int.parse(
+            DateFormat("HH:mm").format(date).toString().split(':')[1]);
+        printK(" hour is $hour minute is $minute");
+
+        notificationService.scheduledNotification(hour, minute, task);
+        return AnimationConfiguration.staggeredList(
+          position: index,
+          duration: const Duration(milliseconds: 1200),
+          child: SlideAnimation(
+            horizontalOffset: 300,
+            child: FadeInAnimation(
+              child: GestureDetector(
+                onTap: () async {
+                  await showTaskBottomSheet(context, task);
+                },
+                child: TaskTile(task),
+              ),
+            ),
+          ),
+        );
+      },
+      itemCount: taskController.tasks.length,
     );
   }
 }
