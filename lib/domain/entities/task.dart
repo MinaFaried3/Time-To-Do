@@ -1,18 +1,18 @@
 import 'package:equatable/equatable.dart';
 
 class Task extends Equatable {
-  int? id;
-  String? title;
-  String? note;
-  int? isCompleted;
-  String? date;
-  String? startTime;
-  String? endTime;
-  int? color;
-  int? remind;
-  String? repeat;
+  final int? id;
+  final String? title;
+  final String? note;
+  final int? isCompleted;
+  final String? date;
+  final String? startTime;
+  final String? endTime;
+  final int? color;
+  final int? remind;
+  final String? repeat;
 
-  Task(
+  const Task(
       {this.id,
       this.title,
       this.note,

@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
@@ -11,7 +12,7 @@ import 'package:todo_clean_architecture/data/model/task_model.dart';
 
 import '../../../../presentation/screens/notification_screen.dart';
 
-class NotificationService {
+class NotificationService extends Equatable {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
@@ -19,6 +20,7 @@ class NotificationService {
 
   final BehaviorSubject<String> selectNotificationSubject =
       BehaviorSubject<String>();
+
   initializeNotification() async {
     tz.initializeTimeZones();
     _configureSelectNotificationSubject();
@@ -162,4 +164,7 @@ class NotificationService {
       await Get.to(() => NotificationScreen(payload: payload));
     });
   }
+
+  @override
+  List<Object> get props => [selectNotificationSubject];
 }

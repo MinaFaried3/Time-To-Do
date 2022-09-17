@@ -7,6 +7,7 @@ import 'package:todo_clean_architecture/core/utils/global/themes/colors/colors.d
 import 'package:todo_clean_architecture/core/utils/global/themes/theme/dark.dart';
 import 'package:todo_clean_architecture/core/utils/global/themes/theme/light.dart';
 import 'package:todo_clean_architecture/core/utils/global/themes/theme_sevice.dart';
+import 'package:todo_clean_architecture/data/datasource/local/sql.dart';
 import 'package:todo_clean_architecture/presentation/screens/home_screen.dart';
 
 void main() async {
@@ -16,6 +17,7 @@ void main() async {
     // status bar color
   ));
   await GetStorage.init();
+  await DatabaseService.initDB();
   runApp(const MyApp());
 }
 
