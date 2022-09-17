@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_clean_architecture/presentation/components/button.dart';
-import 'package:todo_clean_architecture/presentation/controller/task_conroller.dart';
 import 'package:todo_clean_architecture/presentation/screens/add_task_screen.dart';
+
+import '../../../core/services/service_locator.dart';
+import '../../controller/task_controller.dart';
 
 class TaskBar extends StatelessWidget {
   const TaskBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final taskController = Get.put(TaskController());
+    final taskController = Get.put(getIt<TaskController>());
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:todo_clean_architecture/core/utils/global/shared/size_config.dart';
 
 import '../../core/utils/global/themes/theme_sevice.dart';
-import '../components/avatat.dart';
+import '../components/avatar.dart';
 import '../components/home_screen_widgets/date_piker_bar.dart';
 import '../components/home_screen_widgets/show_tasks.dart';
 import '../components/home_screen_widgets/task_bar.dart';

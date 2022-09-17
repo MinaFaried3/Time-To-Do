@@ -3,12 +3,12 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
-import 'package:todo_clean_architecture/core/utils/global/shared/shared.dart';
+import 'package:todo_clean_architecture/core/services/service_locator.dart';
 import 'package:todo_clean_architecture/data/model/task_model.dart';
 import 'package:todo_clean_architecture/presentation/components/task_tile.dart';
-import 'package:todo_clean_architecture/presentation/controller/task_conroller.dart';
 
 import '../../../core/utils/global/notification/notification_service.dart';
+import '../../controller/task_controller.dart';
 import 'bottom_sheet.dart';
 
 class ShowTasks extends StatefulWidget {
@@ -19,7 +19,7 @@ class ShowTasks extends StatefulWidget {
 }
 
 class _ShowTasksState extends State<ShowTasks> {
-  final TaskController taskController = Get.put(TaskController());
+  final TaskController taskController = Get.put(getIt<TaskController>());
 
   late NotificationService notificationService;
   @override
@@ -33,7 +33,7 @@ class _ShowTasksState extends State<ShowTasks> {
   @override
   Widget build(BuildContext context) {
     var themes = Theme.of(context);
-    late var date;
+    late DateTime date;
     late int minute;
     late int hour;
     late TaskModel task;
@@ -47,7 +47,7 @@ class _ShowTasksState extends State<ShowTasks> {
             DateFormat("HH:mm").format(date).toString().split(':')[0]);
         minute = int.parse(
             DateFormat("HH:mm").format(date).toString().split(':')[1]);
-        printK(" hour is $hour minute is $minute");
+        // printK(" hour is $hour minute is $minute");
 
         notificationService.scheduledNotification(hour, minute, task);
         return AnimationConfiguration.staggeredList(

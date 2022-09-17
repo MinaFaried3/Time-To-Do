@@ -8,12 +8,14 @@ class InputField extends StatelessWidget {
       required this.title,
       required this.hint,
       this.controller,
-      this.widget})
+      this.widget,
+      this.validate})
       : super(key: key);
   final String title;
   final String hint;
   final TextEditingController? controller;
   final Widget? widget;
+  final String? Function(String? value)? validate;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,18 +43,28 @@ class InputField extends StatelessWidget {
                   Expanded(
                       child: TextFormField(
                     controller: controller,
+                    validator: validate,
                     autofocus: false,
                     cursorColor:
                         Get.isDarkMode ? Colors.grey[100] : Colors.grey[700],
                     readOnly: widget != null ? true : false,
                     style: Theme.of(context).textTheme.bodyText2,
                     decoration: InputDecoration(
+                        isDense: true,
                         hintText: hint,
                         hintStyle: Theme.of(context).textTheme.subtitle1,
+                        errorMaxLines: 1,
+                        errorBorder: InputBorder.none,
+                        border: InputBorder.none,
+                        errorText: '',
+                        errorStyle: const TextStyle(
+                          color: Colors.transparent,
+                          fontSize: 0,
+                        ),
                         enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: context.theme.backgroundColor,
-                                width: 0)),
+                          borderSide: BorderSide(
+                              color: context.theme.backgroundColor, width: 0),
+                        ),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                                 color: context.theme.backgroundColor))),
