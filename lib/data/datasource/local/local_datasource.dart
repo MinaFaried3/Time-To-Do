@@ -34,6 +34,7 @@ class LocalDataSource extends BaseLocalDataSource {
 
   @override
   Future<int> completeTask(int id) async {
+    printK("task completed");
     return await database.rawUpdate('''
        UPDATE $table
        SET isCompleted = ?

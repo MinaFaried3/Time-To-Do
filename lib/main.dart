@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:todo_clean_architecture/core/services/service_locator.dart';
 import 'package:todo_clean_architecture/core/utils/global/themes/colors/colors.dart';
 import 'package:todo_clean_architecture/core/utils/global/themes/theme/dark.dart';
 import 'package:todo_clean_architecture/core/utils/global/themes/theme/light.dart';
@@ -18,6 +19,7 @@ void main() async {
   ));
   await GetStorage.init();
   await DatabaseService.initDB();
+  ServiceLocator.init();
   runApp(const MyApp());
 }
 
