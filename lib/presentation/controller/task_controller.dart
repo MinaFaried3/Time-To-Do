@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 import '../../data/model/task_model.dart';
 import '../../domain/usecases/completed_task_usecase.dart';
@@ -8,83 +7,19 @@ import '../../domain/usecases/insert_task_usecase.dart';
 import '../../domain/usecases/query_usecase.dart';
 
 class TaskController extends GetxController {
-  final CompleteTaskUseCase completeTaskUseCase;
-  final DeleteTaskUseCase deleteTaskUseCase;
-  final InsertTaskUseCase insertTaskUseCase;
-  final GetQueryUseCase getQueryUseCase;
+  final CompleteTaskUseCase _completeTaskUseCase;
+  final DeleteTaskUseCase _deleteTaskUseCase;
+  final InsertTaskUseCase _insertTaskUseCase;
+  final GetQueryUseCase _getQueryUseCase;
 
-  TaskController(this.completeTaskUseCase, this.deleteTaskUseCase,
-      this.insertTaskUseCase, this.getQueryUseCase);
-  List<TaskModel> tasks = [
-    TaskModel(
-        id: 0,
-        color: 0,
-        endTime: "2:18",
-        startTime: DateFormat('hh:mm a')
-            .format(DateTime.now().add(const Duration(minutes: 1)))
-            .toString(),
-        isCompleted: 0,
-        note:
-            "vipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisv",
-        title: "Mina "),
-    TaskModel(
-        id: 0,
-        color: 1,
-        endTime: "2:18",
-        startTime: DateFormat('hh:mm a')
-            .format(DateTime.now().add(const Duration(minutes: 1)))
-            .toString(),
-        isCompleted: 0,
-        note:
-            "vipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisv",
-        title: "Mina "),
-    TaskModel(
-        id: 0,
-        color: 2,
-        endTime: "2:18",
-        startTime: DateFormat('hh:mm a')
-            .format(DateTime.now().add(const Duration(minutes: 1)))
-            .toString(),
-        isCompleted: 1,
-        note:
-            "vipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisv",
-        title: "Mina "),
-    TaskModel(
-        id: 0,
-        color: 1,
-        endTime: "2:18",
-        startTime: DateFormat('hh:mm a')
-            .format(DateTime.now().add(const Duration(minutes: 1)))
-            .toString(),
-        isCompleted: 0,
-        note:
-            "vipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisv",
-        title: "Mina "),
-    TaskModel(
-        id: 0,
-        color: 1,
-        endTime: "2:18",
-        startTime: DateFormat('hh:mm a')
-            .format(DateTime.now().add(const Duration(minutes: 1)))
-            .toString(),
-        isCompleted: 1,
-        note:
-            "vipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisv",
-        title: "Mina "),
-    TaskModel(
-        id: 0,
-        color: 2,
-        endTime: "2:18",
-        startTime: DateFormat('hh:mm a')
-            .format(DateTime.now().add(const Duration(minutes: 1)))
-            .toString(),
-        isCompleted: 0,
-        note:
-            "vipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisvvipw ivdw ibdvsa abov aibnvd baoisv",
-        title: "Mina "),
-  ];
+  TaskController(this._completeTaskUseCase, this._deleteTaskUseCase,
+      this._insertTaskUseCase, this._getQueryUseCase);
+  RxList<TaskModel> tasks = <TaskModel>[].obs;
 
-  getTasks() {}
+  Future<void> getTasks() async {
+    List<Map<String, dynamic>> result = await _getQueryUseCase();
+    tasks.assignAll(result.map((e) => TaskModel.fromJson(e)).toList());
+  }
 
   Future<int> addTaskToDB({
     required String title,
@@ -97,7 +32,7 @@ class TaskController extends GetxController {
     required int remind,
     int isCompleted = 0,
   }) async {
-    int result = await insertTaskUseCase(TaskModel(
+    TaskModel task = TaskModel(
       title: title,
       note: note,
       date: date,
@@ -107,8 +42,22 @@ class TaskController extends GetxController {
       remind: remind,
       isCompleted: isCompleted,
       color: color,
-    ));
+    );
 
+    int result = await _insertTaskUseCase(task);
+    await getTasks();
+    return result;
+  }
+
+  Future<int> deleteTask(TaskModel task) async {
+    final int result = await _deleteTaskUseCase(task);
+    await getTasks();
+    return result;
+  }
+
+  Future<int> completeTask(int id) async {
+    final int result = await _completeTaskUseCase(id);
+    await getTasks();
     return result;
   }
 }

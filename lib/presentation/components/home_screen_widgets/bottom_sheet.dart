@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:todo_clean_architecture/core/services/service_locator.dart';
 import 'package:todo_clean_architecture/core/utils/global/shared/size_config.dart';
 import 'package:todo_clean_architecture/data/model/task_model.dart';
+import 'package:todo_clean_architecture/presentation/controller/task_controller.dart';
 
 class BuildBottomSheetItem extends StatelessWidget {
   const BuildBottomSheetItem(
@@ -50,6 +53,7 @@ class BuildBottomSheetItem extends StatelessWidget {
 
 Future<dynamic> showTaskBottomSheet(
     BuildContext context, TaskModel task) async {
+  final TaskController taskController = Get.put(getIt<TaskController>());
   return await Get.bottomSheet(SingleChildScrollView(
     child: Container(
       padding: const EdgeInsets.only(top: 4),
@@ -86,13 +90,15 @@ Future<dynamic> showTaskBottomSheet(
           if (task.isCompleted == 0)
             BuildBottomSheetItem(
                 label: "Task Completed",
-                onTap: () {
+                onTap: () async {
+                  await taskController.completeTask(task.id!);
                   Get.back();
                 },
                 clr: Theme.of(context).primaryColor),
           BuildBottomSheetItem(
               label: "Delete Task",
-              onTap: () {
+              onTap: () async {
+                await taskController.deleteTask(task);
                 Get.back();
               },
               clr: Theme.of(context).primaryColor),

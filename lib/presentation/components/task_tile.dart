@@ -6,8 +6,8 @@ import 'package:todo_clean_architecture/core/utils/global/themes/colors/colors.d
 import 'package:todo_clean_architecture/data/model/task_model.dart';
 
 class TaskTile extends StatelessWidget {
-  TaskTile(this.task, {Key? key}) : super(key: key);
-  late TaskModel task;
+  const TaskTile(this.task, {Key? key}) : super(key: key);
+  final TaskModel task;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +28,7 @@ class TaskTile extends StatelessWidget {
                 color: getShadow(task.color, Get.isDarkMode ? 0.4 : 0.7),
                 spreadRadius: 4,
                 blurRadius: 10,
-                offset: Offset(4, 9)),
+                offset: const Offset(4, 9)),
           ]),
       child: Row(
         children: [

@@ -78,37 +78,72 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       return null;
                     },
                   ),
-                  InputField(
-                    title: "Date",
-                    hint: DateFormat.yMd().format(selectedDate),
-                    widget: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.calendar_month_outlined),
-                    ),
+                  StatefulBuilder(
+                    builder: (context, state) {
+                      return InputField(
+                        title: "Date",
+                        hint: DateFormat.yMd().format(selectedDate),
+                        widget: IconButton(
+                          onPressed: () async {
+                            DateTime? date = await getDate();
+                            if (date != null) {
+                              state(() {
+                                selectedDate = date;
+                              });
+                            }
+                          },
+                          icon: const Icon(Icons.calendar_month_outlined),
+                        ),
+                      );
+                    },
                   ),
                   Row(
                     children: [
                       Expanded(
-                        child: InputField(
-                          title: "Start Time",
-                          hint: startTime,
-                          widget: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.watch_later_outlined),
-                          ),
+                        child: StatefulBuilder(
+                          builder: (context, state) {
+                            return InputField(
+                              title: "Start Time",
+                              hint: startTime,
+                              widget: IconButton(
+                                onPressed: () async {
+                                  TimeOfDay? time1 = await getStartTime();
+
+                                  if (time1 != null) {
+                                    state(() {
+                                      startTime = time1.format(context);
+                                    });
+                                  }
+                                },
+                                icon: const Icon(Icons.watch_later_outlined),
+                              ),
+                            );
+                          },
                         ),
                       ),
                       const SizedBox(
                         width: 10,
                       ),
                       Expanded(
-                        child: InputField(
-                          title: "End Time",
-                          hint: endTime,
-                          widget: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.watch_later_outlined),
-                          ),
+                        child: StatefulBuilder(
+                          builder: (context, state) {
+                            return InputField(
+                              title: "End Time",
+                              hint: endTime,
+                              widget: IconButton(
+                                onPressed: () async {
+                                  TimeOfDay? time2 = await getEndTime();
+
+                                  if (time2 != null) {
+                                    state(() {
+                                      endTime = time2.format(context);
+                                    });
+                                  }
+                                },
+                                icon: const Icon(Icons.watch_later_outlined),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],
@@ -252,7 +287,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
       leading: IconButton(
-        onPressed: () {
+        onPressed: () async {
           Get.back();
         },
         icon: const Icon(Icons.arrow_back_ios),
@@ -311,6 +346,30 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           height: 10,
         ),
       ],
+    );
+  }
+
+  Future<DateTime?> getDate() async {
+    return await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2015),
+      lastDate: DateTime(2050),
+    );
+  }
+
+  Future<TimeOfDay?> getStartTime() async {
+    return await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(DateTime.now()),
+    );
+  }
+
+  Future<TimeOfDay?> getEndTime() async {
+    return await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(
+          DateTime.now().add(const Duration(minutes: 15))),
     );
   }
 }

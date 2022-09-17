@@ -37,36 +37,36 @@ class _ShowTasksState extends State<ShowTasks> {
     late int minute;
     late int hour;
     late TaskModel task;
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        task = taskController.tasks[index];
-        date = DateFormat.jm().parse(task.startTime!);
-        hour = int.parse(
-            DateFormat("HH:mm").format(date).toString().split(':')[0]);
-        minute = int.parse(
-            DateFormat("HH:mm").format(date).toString().split(':')[1]);
-        // printK(" hour is $hour minute is $minute");
+    return Obx(() => ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            task = taskController.tasks[index];
+            date = DateFormat.jm().parse(task.startTime!);
+            hour = int.parse(
+                DateFormat("HH:mm").format(date).toString().split(':')[0]);
+            minute = int.parse(
+                DateFormat("HH:mm").format(date).toString().split(':')[1]);
+            // printK(" hour is $hour minute is $minute");
 
-        notificationService.scheduledNotification(hour, minute, task);
-        return AnimationConfiguration.staggeredList(
-          position: index,
-          duration: const Duration(milliseconds: 1200),
-          child: SlideAnimation(
-            horizontalOffset: 300,
-            child: FadeInAnimation(
-              child: GestureDetector(
-                onTap: () async {
-                  await showTaskBottomSheet(context, task);
-                },
-                child: TaskTile(task),
+            notificationService.scheduledNotification(hour, minute, task);
+            return AnimationConfiguration.staggeredList(
+              position: index,
+              duration: const Duration(milliseconds: 1200),
+              child: SlideAnimation(
+                horizontalOffset: 300,
+                child: FadeInAnimation(
+                  child: GestureDetector(
+                    onTap: () async {
+                      await showTaskBottomSheet(context, task);
+                    },
+                    child: TaskTile(task),
+                  ),
+                ),
               ),
-            ),
-          ),
-        );
-      },
-      itemCount: taskController.tasks.length,
-    );
+            );
+          },
+          itemCount: taskController.tasks.length,
+        ));
   }
 }
