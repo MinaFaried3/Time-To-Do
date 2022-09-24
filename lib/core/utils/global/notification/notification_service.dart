@@ -13,10 +13,10 @@ import 'package:todo_clean_architecture/data/model/task_model.dart';
 import '../../../../presentation/screens/notification_screen.dart';
 
 class NotificationService extends Equatable {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  String selectedNotificationPayload = '';
+  final String selectedNotificationPayload = '';
 
   final BehaviorSubject<String> selectNotificationSubject =
       BehaviorSubject<String>();
@@ -57,7 +57,9 @@ class NotificationService extends Equatable {
     printK('doing test');
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
         'your channel id', 'your channel name',
-        importance: Importance.max, priority: Priority.high);
+        channelDescription: 'your channel description',
+        importance: Importance.max,
+        priority: Priority.high);
     var iOSPlatformChannelSpecifics = const IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
@@ -79,8 +81,9 @@ class NotificationService extends Equatable {
       //tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
       _nextInstanceOfTenAM(hour, minutes),
       const NotificationDetails(
-        android:
-            AndroidNotificationDetails('your channel id', 'your channel name'),
+        android: AndroidNotificationDetails(
+            'your channel id', 'your channel name',
+            channelDescription: 'your channel description'),
       ),
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:
@@ -166,5 +169,6 @@ class NotificationService extends Equatable {
   }
 
   @override
-  List<Object> get props => [selectNotificationSubject];
+  List<Object> get props =>
+      [selectNotificationSubject, selectedNotificationPayload];
 }

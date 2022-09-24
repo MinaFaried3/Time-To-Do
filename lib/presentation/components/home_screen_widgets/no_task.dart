@@ -45,7 +45,7 @@ class NoTasks extends StatelessWidget {
                       height: 50,
                     )
                   : const SizedBox(
-                      height: 100,
+                      height: 200,
                     ),
             ],
           ),

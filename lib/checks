@@ -7,7 +7,7 @@ create getter setter for theme use case
 init date picker
 shadow datePiker in white theme
 Equatable all
-Task in schedule Notification repleace with TaskModel
+Task in schedule Notification replace with TaskModel
 add special effects to the completed tasks
 remove padding from date picker
 singleton notification show tasks
@@ -18,4 +18,6 @@ convert text fields to button
 animated icons ,text
 padding problems in home screen
 index problem
-
+add repeated to view
+check notifications
+solve date loaded using where function

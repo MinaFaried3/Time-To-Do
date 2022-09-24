@@ -271,7 +271,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                 padding: const EdgeInsets.all(10),
                               );
                             }
-                            // Get.back();
                           })
                     ],
                   )

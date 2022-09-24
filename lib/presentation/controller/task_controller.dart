@@ -18,6 +18,7 @@ class TaskController extends GetxController {
 
   Future<void> getTasks() async {
     List<Map<String, dynamic>> result = await _getQueryUseCase();
+
     tasks.assignAll(result.map((e) => TaskModel.fromJson(e)).toList());
   }
 
@@ -45,6 +46,7 @@ class TaskController extends GetxController {
     );
 
     int result = await _insertTaskUseCase(task);
+
     await getTasks();
     return result;
   }
@@ -59,5 +61,11 @@ class TaskController extends GetxController {
     final int result = await _completeTaskUseCase(id);
     await getTasks();
     return result;
+  }
+
+  DateTime selectedDate = DateTime.now();
+  Future<void> changeSelectedDate(DateTime newDate) async {
+    selectedDate = newDate;
+    await getTasks();
   }
 }

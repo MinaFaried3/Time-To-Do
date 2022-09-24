@@ -19,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TaskController taskController = Get.put(getIt<TaskController>());
+
   @override
   void initState() {
     super.initState();
@@ -40,23 +41,37 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              TaskBar(),
-              SizedBox(
-                height: 15,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await taskController.getTasks();
+        },
+        color: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: TaskBar(),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 8.0),
+                    child: DatePikerBar(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 8.0),
+                    child: ShowTasks(),
+                  )
+                ],
               ),
-              DatePikerBar(),
-              SizedBox(
-                height: 15,
-              ),
-              ShowTasks()
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

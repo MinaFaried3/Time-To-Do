@@ -4,10 +4,11 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_clean_architecture/core/services/service_locator.dart';
-import 'package:todo_clean_architecture/data/model/task_model.dart';
+import 'package:todo_clean_architecture/presentation/components/home_screen_widgets/no_task.dart';
 import 'package:todo_clean_architecture/presentation/components/task_tile.dart';
 
 import '../../../core/utils/global/notification/notification_service.dart';
+import '../../../data/model/task_model.dart';
 import '../../controller/task_controller.dart';
 import 'bottom_sheet.dart';
 
@@ -19,7 +20,7 @@ class ShowTasks extends StatefulWidget {
 }
 
 class _ShowTasksState extends State<ShowTasks> {
-  final TaskController taskController = Get.put(getIt<TaskController>());
+  TaskController taskController = Get.put(getIt<TaskController>());
 
   late NotificationService notificationService;
   @override
@@ -33,40 +34,46 @@ class _ShowTasksState extends State<ShowTasks> {
   @override
   Widget build(BuildContext context) {
     var themes = Theme.of(context);
-    late DateTime date;
-    late int minute;
-    late int hour;
-    late TaskModel task;
-    return Obx(() => ListView.builder(
+    return Obx(() {
+      if (taskController.tasks.isEmpty) {
+        return const NoTasks();
+      } else {
+        return ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            task = taskController.tasks[index];
-            date = DateFormat.jm().parse(task.startTime!);
-            hour = int.parse(
+            TaskModel task = taskController.tasks[index];
+            DateTime date = DateFormat.jm().parse(task.startTime!);
+            int hour = int.parse(
                 DateFormat("HH:mm").format(date).toString().split(':')[0]);
-            minute = int.parse(
+            int minute = int.parse(
                 DateFormat("HH:mm").format(date).toString().split(':')[1]);
-            // printK(" hour is $hour minute is $minute");
-
             notificationService.scheduledNotification(hour, minute, task);
-            return AnimationConfiguration.staggeredList(
-              position: index,
-              duration: const Duration(milliseconds: 1200),
-              child: SlideAnimation(
-                horizontalOffset: 300,
-                child: FadeInAnimation(
-                  child: GestureDetector(
-                    onTap: () async {
-                      await showTaskBottomSheet(context, task);
-                    },
-                    child: TaskTile(task),
+            if (task.date ==
+                    DateFormat.yMd().format(taskController.selectedDate) ||
+                task.repeat == 'Daily') {
+              return AnimationConfiguration.staggeredList(
+                position: index,
+                duration: const Duration(milliseconds: 1200),
+                child: SlideAnimation(
+                  horizontalOffset: 300,
+                  child: FadeInAnimation(
+                    child: GestureDetector(
+                      onTap: () async {
+                        await showTaskBottomSheet(context, task);
+                      },
+                      child: TaskTile(task),
+                    ),
                   ),
                 ),
-              ),
-            );
+              );
+            } else {
+              return SizedBox();
+            }
           },
           itemCount: taskController.tasks.length,
-        ));
+        );
+      }
+    });
   }
 }
