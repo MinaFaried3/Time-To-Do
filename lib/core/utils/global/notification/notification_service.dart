@@ -4,6 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -73,13 +74,23 @@ class NotificationService extends Equatable {
     );
   }
 
+  cancelNotification(TaskModel task) async {
+    flutterLocalNotificationsPlugin.cancel(task.id!);
+  }
+
   scheduledNotification(int hour, int minutes, TaskModel task) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
       task.id!,
       task.title,
       task.note,
       //tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
-      _nextInstanceOfTenAM(hour, minutes),
+      _nextInstanceOfTenAM(
+        hour,
+        minutes,
+        task.remind!,
+        task.repeat!,
+        task.date!,
+      ),
       const NotificationDetails(
         android: AndroidNotificationDetails(
             'your channel id', 'your channel name',
@@ -93,13 +104,36 @@ class NotificationService extends Equatable {
     );
   }
 
-  tz.TZDateTime _nextInstanceOfTenAM(int hour, int minutes) {
+  tz.TZDateTime _nextInstanceOfTenAM(
+    int hour,
+    int minutes,
+    int remind,
+    String repeat,
+    String date,
+  ) {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduledDate =
         tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minutes);
+    DateTime dateTime = DateFormat.yMd().parse(date);
+    scheduledDate = scheduledDate.subtract(Duration(minutes: remind));
     if (scheduledDate.isBefore(now)) {
-      scheduledDate = scheduledDate.add(const Duration(days: 1));
+      switch (repeat) {
+        case "Daily":
+          scheduledDate = tz.TZDateTime(
+              tz.local, now.year, now.month, (dateTime.day) + 1, hour, minutes);
+          break;
+        case "Monthly":
+          scheduledDate = tz.TZDateTime(tz.local, now.year,
+              (dateTime.month) + 1, (dateTime.day), hour, minutes);
+          break;
+        case "Weekly":
+          scheduledDate = tz.TZDateTime(
+              tz.local, now.year, now.month, (dateTime.day) + 7, hour, minutes);
+          break;
+      }
     }
+    scheduledDate = scheduledDate.subtract(Duration(minutes: remind));
+    printK("final scheduleDate = $scheduledDate");
     return scheduledDate;
   }
 

@@ -7,6 +7,8 @@ import 'package:todo_clean_architecture/core/utils/global/shared/size_config.dar
 import 'package:todo_clean_architecture/data/model/task_model.dart';
 import 'package:todo_clean_architecture/presentation/controller/task_controller.dart';
 
+import '../../../core/utils/global/notification/notification_service.dart';
+
 class BuildBottomSheetItem extends StatelessWidget {
   const BuildBottomSheetItem(
       {required this.label,
@@ -54,6 +56,9 @@ class BuildBottomSheetItem extends StatelessWidget {
 Future<dynamic> showTaskBottomSheet(
     BuildContext context, TaskModel task) async {
   final TaskController taskController = Get.put(getIt<TaskController>());
+  final NotificationService notificationService = getIt<NotificationService>();
+  notificationService.requestIOSPermissions();
+  notificationService.initializeNotification();
   return await Get.bottomSheet(SingleChildScrollView(
     child: Container(
       padding: const EdgeInsets.only(top: 4),
@@ -92,6 +97,7 @@ Future<dynamic> showTaskBottomSheet(
                 label: "Task Completed",
                 onTap: () async {
                   await taskController.completeTask(task.id!);
+                  notificationService.cancelNotification(task);
                   Get.back();
                 },
                 clr: Theme.of(context).primaryColor),
@@ -99,6 +105,7 @@ Future<dynamic> showTaskBottomSheet(
               label: "Delete Task",
               onTap: () async {
                 await taskController.deleteTask(task);
+                notificationService.cancelNotification(task);
                 Get.back();
               },
               clr: Theme.of(context).primaryColor),

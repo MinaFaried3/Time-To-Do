@@ -19,5 +19,10 @@ animated icons ,text
 padding problems in home screen
 index problem
 add repeated to view
-check notifications
+check notifications for end time
 solve date loaded using where function
+change strings to enum
+create object to less heavy from main listView
+check notifications singletone
+create home expanded
+

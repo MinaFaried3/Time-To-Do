@@ -8,6 +8,7 @@ import '../../domain/usecases/delete_task_usecase.dart';
 import '../../domain/usecases/insert_task_usecase.dart';
 import '../../domain/usecases/query_usecase.dart';
 import '../../presentation/controller/task_controller.dart';
+import '../utils/global/notification/notification_service.dart';
 
 final getIt = GetIt.instance;
 
@@ -32,5 +33,9 @@ class ServiceLocator {
 
     ///DATA SOURCE
     getIt.registerLazySingleton<BaseLocalDataSource>(() => LocalDataSource());
+
+    ///Notification
+    getIt.registerLazySingleton<NotificationService>(
+        () => NotificationService());
   }
 }

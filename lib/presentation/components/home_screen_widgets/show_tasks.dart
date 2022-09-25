@@ -26,7 +26,7 @@ class _ShowTasksState extends State<ShowTasks> {
   @override
   void initState() {
     super.initState();
-    notificationService = NotificationService();
+    notificationService = getIt<NotificationService>();
     notificationService.requestIOSPermissions();
     notificationService.initializeNotification();
   }
@@ -41,20 +41,29 @@ class _ShowTasksState extends State<ShowTasks> {
         return ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
+          reverse: true,
           itemBuilder: (context, index) {
             TaskModel task = taskController.tasks[index];
-            DateTime date = DateFormat.jm().parse(task.startTime!);
+            DateTime startTime = DateFormat.jm().parse(task.startTime!);
+            DateTime date = DateFormat.yMd().parse(task.date!);
+            DateTime selectedDate = taskController.selectedDate;
             int hour = int.parse(
-                DateFormat("HH:mm").format(date).toString().split(':')[0]);
+                DateFormat("HH:mm").format(startTime).toString().split(':')[0]);
             int minute = int.parse(
-                DateFormat("HH:mm").format(date).toString().split(':')[1]);
+                DateFormat("HH:mm").format(startTime).toString().split(':')[1]);
+            bool isSelectedDate =
+                (task.date == DateFormat.yMd().format(selectedDate));
+            bool isDaily = (task.repeat == 'Daily');
+            bool isWeekly = (task.repeat == 'Weekly' &&
+                selectedDate.difference(date).inDays % 7 == 0);
+            bool isMonthly =
+                (task.repeat == 'Monthly' && date.day == selectedDate.day);
+
             notificationService.scheduledNotification(hour, minute, task);
-            if (task.date ==
-                    DateFormat.yMd().format(taskController.selectedDate) ||
-                task.repeat == 'Daily') {
+            if (isSelectedDate || isDaily || isWeekly || isMonthly) {
               return AnimationConfiguration.staggeredList(
                 position: index,
-                duration: const Duration(milliseconds: 1200),
+                duration: const Duration(milliseconds: 900),
                 child: SlideAnimation(
                   horizontalOffset: 300,
                   child: FadeInAnimation(
