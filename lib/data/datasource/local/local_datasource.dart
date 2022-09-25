@@ -7,6 +7,7 @@ import '../../../core/utils/global/shared/shared.dart';
 abstract class BaseLocalDataSource {
   Future<int> insertTask(TaskModel task);
   Future<int> deleteTask(TaskModel task);
+  Future<int> deleteAll();
   Future<List<Map<String, dynamic>>> getQueries();
   Future<int> completeTask(int id);
 }
@@ -24,6 +25,12 @@ class LocalDataSource extends BaseLocalDataSource {
   Future<int> deleteTask(TaskModel task) async {
     printK("delete; from database");
     return await database.delete(table, where: "id = ?", whereArgs: [task.id]);
+  }
+
+  @override
+  Future<int> deleteAll() async {
+    printK("deleted All; from database");
+    return await database.delete(table);
   }
 
   @override

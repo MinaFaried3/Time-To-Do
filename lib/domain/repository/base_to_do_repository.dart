@@ -5,6 +5,8 @@ abstract class BaseToDoRepository {
 
   Future<int> deleteTask(TaskModel task);
 
+  Future<int> deleteAll();
+
   Future<List<Map<String, dynamic>>> getQueries();
 
   Future<int> completeTask(int id);

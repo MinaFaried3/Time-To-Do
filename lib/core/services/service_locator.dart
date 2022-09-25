@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:todo_clean_architecture/data/datasource/local/local_datasource.dart';
 import 'package:todo_clean_architecture/data/repository/to_do_repository.dart';
 import 'package:todo_clean_architecture/domain/repository/base_to_do_repository.dart';
+import 'package:todo_clean_architecture/domain/usecases/delete_all.dart';
 
 import '../../domain/usecases/completed_task_usecase.dart';
 import '../../domain/usecases/delete_task_usecase.dart';
@@ -16,7 +17,7 @@ class ServiceLocator {
   static void init() {
     ///GetX controllers
     getIt.registerFactory(
-        () => TaskController(getIt(), getIt(), getIt(), getIt()));
+        () => TaskController(getIt(), getIt(), getIt(), getIt(), getIt()));
 
     /// USE CASES
     getIt.registerLazySingleton(() => InsertTaskUseCase(getIt()));
@@ -26,6 +27,7 @@ class ServiceLocator {
     getIt.registerLazySingleton(() => CompleteTaskUseCase(getIt()));
 
     getIt.registerLazySingleton(() => GetQueryUseCase(getIt()));
+    getIt.registerLazySingleton(() => DeleteAllUseCase(getIt()));
 
     /// REPOSITORY
     getIt.registerLazySingleton<BaseToDoRepository>(

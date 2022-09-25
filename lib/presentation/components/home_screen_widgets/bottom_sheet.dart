@@ -21,6 +21,7 @@ class BuildBottomSheetItem extends StatelessWidget {
   final Function() onTap;
   final Color clr;
   final bool isClose;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -57,8 +58,6 @@ Future<dynamic> showTaskBottomSheet(
     BuildContext context, TaskModel task) async {
   final TaskController taskController = Get.put(getIt<TaskController>());
   final NotificationService notificationService = getIt<NotificationService>();
-  notificationService.requestIOSPermissions();
-  notificationService.initializeNotification();
   return await Get.bottomSheet(SingleChildScrollView(
     child: Container(
       padding: const EdgeInsets.only(top: 4),

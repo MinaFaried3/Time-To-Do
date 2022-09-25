@@ -27,8 +27,6 @@ class _ShowTasksState extends State<ShowTasks> {
   void initState() {
     super.initState();
     notificationService = getIt<NotificationService>();
-    notificationService.requestIOSPermissions();
-    notificationService.initializeNotification();
   }
 
   @override

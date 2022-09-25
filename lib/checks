@@ -25,4 +25,5 @@ change strings to enum
 create object to less heavy from main listView
 check notifications singletone
 create home expanded
+add delete all tasks
 

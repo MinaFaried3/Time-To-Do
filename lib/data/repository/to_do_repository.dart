@@ -18,6 +18,11 @@ class ToDoRepository extends BaseToDoRepository {
   }
 
   @override
+  Future<int> deleteAll() async {
+    return await baseLocalDataSource.deleteAll();
+  }
+
+  @override
   Future<List<Map<String, dynamic>>> getQueries() async {
     return await baseLocalDataSource.getQueries();
   }

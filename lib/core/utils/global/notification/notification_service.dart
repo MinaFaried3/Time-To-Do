@@ -78,6 +78,10 @@ class NotificationService extends Equatable {
     flutterLocalNotificationsPlugin.cancel(task.id!);
   }
 
+  cancelAllNotification() async {
+    flutterLocalNotificationsPlugin.cancelAll();
+  }
+
   scheduledNotification(int hour, int minutes, TaskModel task) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
       task.id!,
@@ -112,9 +116,11 @@ class NotificationService extends Equatable {
     String date,
   ) {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minutes);
     DateTime dateTime = DateFormat.yMd().parse(date);
+    final tz.TZDateTime formattedDate = tz.TZDateTime.from(dateTime, tz.local);
+    tz.TZDateTime scheduledDate = tz.TZDateTime(tz.local, formattedDate.year,
+        formattedDate.month, formattedDate.day, hour, minutes);
+
     scheduledDate = scheduledDate.subtract(Duration(minutes: remind));
     if (scheduledDate.isBefore(now)) {
       switch (repeat) {
@@ -131,8 +137,9 @@ class NotificationService extends Equatable {
               tz.local, now.year, now.month, (dateTime.day) + 7, hour, minutes);
           break;
       }
+      scheduledDate = scheduledDate.subtract(Duration(minutes: remind));
     }
-    scheduledDate = scheduledDate.subtract(Duration(minutes: remind));
+
     printK("final scheduleDate = $scheduledDate");
     return scheduledDate;
   }

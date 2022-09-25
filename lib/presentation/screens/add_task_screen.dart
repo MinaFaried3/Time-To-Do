@@ -7,6 +7,7 @@ import 'package:todo_clean_architecture/presentation/components/button.dart';
 import 'package:todo_clean_architecture/presentation/controller/task_controller.dart';
 
 import '../../core/services/service_locator.dart';
+import '../../core/utils/global/notification/notification_service.dart';
 import '../components/avatar.dart';
 import '../components/input_filed.dart';
 
@@ -36,9 +37,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   int selectedColor = 0;
 
+  late NotificationService notificationService;
+
   @override
   void initState() {
     super.initState();
+    notificationService = getIt<NotificationService>();
   }
 
   @override

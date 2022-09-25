@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../../data/model/task_model.dart';
 import '../../domain/usecases/completed_task_usecase.dart';
+import '../../domain/usecases/delete_all.dart';
 import '../../domain/usecases/delete_task_usecase.dart';
 import '../../domain/usecases/insert_task_usecase.dart';
 import '../../domain/usecases/query_usecase.dart';
@@ -11,9 +12,10 @@ class TaskController extends GetxController {
   final DeleteTaskUseCase _deleteTaskUseCase;
   final InsertTaskUseCase _insertTaskUseCase;
   final GetQueryUseCase _getQueryUseCase;
+  final DeleteAllUseCase _deleteAllUseCase;
 
   TaskController(this._completeTaskUseCase, this._deleteTaskUseCase,
-      this._insertTaskUseCase, this._getQueryUseCase);
+      this._insertTaskUseCase, this._getQueryUseCase, this._deleteAllUseCase);
   RxList<TaskModel> tasks = <TaskModel>[].obs;
 
   Future<void> getTasks() async {
@@ -59,6 +61,12 @@ class TaskController extends GetxController {
 
   Future<int> completeTask(int id) async {
     final int result = await _completeTaskUseCase(id);
+    await getTasks();
+    return result;
+  }
+
+  Future<int> deleteAll() async {
+    final int result = await _deleteAllUseCase();
     await getTasks();
     return result;
   }
