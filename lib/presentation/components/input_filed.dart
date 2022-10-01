@@ -18,6 +18,10 @@ class InputField extends StatelessWidget {
   final String? Function(String? value)? validate;
   @override
   Widget build(BuildContext context) {
+    final sizeConfig = SizeConfig(context);
+    // sizeConfig.setBodyHeight(context,
+    //     appBarHeight: appBar.preferredSize.height,
+    //     statusBarHeight: SizeConfig.mediaQueryData.padding.top);
     return Container(
       margin: const EdgeInsets.only(top: 10),
       child: Column(
@@ -32,7 +36,7 @@ class InputField extends StatelessWidget {
               padding: const EdgeInsets.only(left: 14),
               margin: const EdgeInsets.only(top: 8),
               height: 60,
-              width: SizeConfig.screenWidth,
+              width: sizeConfig.screenWidth,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(

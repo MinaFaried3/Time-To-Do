@@ -10,16 +10,19 @@ class TaskTile extends StatelessWidget {
   final TaskModel task;
   @override
   Widget build(BuildContext context) {
+    final sizeConfig = SizeConfig(context);
+    // sizeConfig.setBodyHeight(context,
+    //     appBarHeight: appBar.preferredSize.height,
+    //     statusBarHeight: SizeConfig.mediaQueryData.padding.top);
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: getProportionateScreenWidth(
-            SizeConfig.orientation == Orientation.landscape ? 4 : 8,
-          ),
+              sizeConfig.orientation == Orientation.landscape ? 4 : 8, context),
           vertical: 10),
-      width: SizeConfig.orientation == Orientation.landscape
-          ? SizeConfig.screenWidth / 2
-          : SizeConfig.screenWidth,
-      margin: EdgeInsets.all(getProportionateScreenHeight(10)),
+      width: sizeConfig.orientation == Orientation.landscape
+          ? sizeConfig.screenWidth / 2
+          : sizeConfig.screenWidth,
+      margin: EdgeInsets.all(getProportionateScreenHeight(10, context)),
       decoration: BoxDecoration(
           color: getClr(task.color),
           borderRadius: BorderRadius.circular(20),

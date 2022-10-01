@@ -26,4 +26,5 @@ create object to less heavy from main listView
 check notifications singletone
 create home expanded
 add delete all tasks
-
+Unhandled Exception: type 'int' is not a subtype of type 'String?'
+scroll color

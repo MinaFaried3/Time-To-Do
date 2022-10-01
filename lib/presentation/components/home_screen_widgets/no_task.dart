@@ -7,8 +7,12 @@ class NoTasks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sizeConfig = SizeConfig(context);
+    // sizeConfig.setBodyHeight(context,
+    //     appBarHeight: appBar.preferredSize.height,
+    //     statusBarHeight: SizeConfig.mediaQueryData.padding.top);
     var themes = Theme.of(context);
-    bool orientation = SizeConfig.orientation == Orientation.landscape;
+    bool orientation = sizeConfig.orientation == Orientation.landscape;
     return Stack(
       children: [
         AnimatedPositioned(

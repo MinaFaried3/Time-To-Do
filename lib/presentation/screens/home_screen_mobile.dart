@@ -32,27 +32,33 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: () async {
-                await taskController.deleteAll();
-                await notificationService.cancelAllNotification();
-              },
-              icon: const Icon(Icons.cleaning_services_rounded)),
-          const Avatar(),
-        ],
-        leading: IconButton(
-          icon: Icon(Get.isDarkMode ? Icons.dark_mode_outlined : Icons.light),
-          onPressed: () async {
-            ThemeService().switchTheme();
-            setState(() {});
-            await taskController.getTasks();
-          },
-        ),
+    var appBar = AppBar(
+      actions: [
+        IconButton(
+            onPressed: () async {
+              await taskController.deleteAll();
+              await notificationService.cancelAllNotification();
+            },
+            icon: const Icon(Icons.cleaning_services_rounded)),
+        const Avatar(),
+      ],
+      leading: IconButton(
+        icon: Icon(Get.isDarkMode ? Icons.dark_mode_outlined : Icons.light),
+        onPressed: () async {
+          ThemeService().switchTheme();
+          setState(() {});
+          await taskController.getTasks();
+        },
       ),
+    );
+
+    final sizeConfig = SizeConfig(context);
+    sizeConfig.setBodyHeight(context,
+        appBarHeight: appBar.preferredSize.height,
+        statusBarHeight: SizeConfig.mediaQueryData.padding.top);
+
+    return Scaffold(
+      appBar: appBar,
       body: RefreshIndicator(
         onRefresh: () async {
           await taskController.getTasks();
@@ -64,21 +70,30 @@ class _HomeScreenState extends State<HomeScreen> {
             SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               child: Column(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: TaskBar(),
+                children: [
+                  SizedBox(
+                    height: sizeConfig.bodyHeight * 0.10,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: sizeConfig.screenWidth * 0.02),
+                      child: const TaskBar(),
+                    ),
                   ),
                   SizedBox(
-                    height: 15,
+                    height: sizeConfig.bodyHeight * 0.15,
+                    child: Padding(
+                      padding:
+                          EdgeInsets.only(left: sizeConfig.screenWidth * 0.02),
+                      child: const DatePikerBar(),
+                    ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 8.0),
-                    child: DatePikerBar(),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 8.0),
-                    child: ShowTasks(),
+                  SizedBox(
+                    height: sizeConfig.bodyHeight * 0.73,
+                    child: Padding(
+                      padding:
+                          EdgeInsets.only(top: sizeConfig.bodyHeight * 0.02),
+                      child: const ShowTasks(),
+                    ),
                   )
                 ],
               ),

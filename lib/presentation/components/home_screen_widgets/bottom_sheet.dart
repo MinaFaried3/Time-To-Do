@@ -24,12 +24,16 @@ class BuildBottomSheetItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sizeConfig = SizeConfig(context);
+    // sizeConfig.setBodyHeight(context,
+    //     appBarHeight: appBar.preferredSize.height,
+    //     statusBarHeight: SizeConfig.mediaQueryData.padding.top);
     return GestureDetector(
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 4),
         height: 65,
-        width: SizeConfig.screenWidth * 0.6,
+        width: sizeConfig.screenWidth * 0.6,
         decoration: BoxDecoration(
             border: Border.all(
               width: 2,
@@ -58,17 +62,22 @@ Future<dynamic> showTaskBottomSheet(
     BuildContext context, TaskModel task) async {
   final TaskController taskController = Get.put(getIt<TaskController>());
   final NotificationService notificationService = getIt<NotificationService>();
+
+  final sizeConfig = SizeConfig(context);
+  // sizeConfig.setBodyHeight(context,
+  //     appBarHeight: appBar.preferredSize.height,
+  //     statusBarHeight: SizeConfig.mediaQueryData.padding.top);
   return await Get.bottomSheet(SingleChildScrollView(
     child: Container(
       padding: const EdgeInsets.only(top: 4),
-      width: SizeConfig.screenWidth * 0.8,
-      height: (SizeConfig.orientation == Orientation.landscape)
+      width: sizeConfig.screenWidth * 0.8,
+      height: (sizeConfig.orientation == Orientation.landscape)
           ? (task.isCompleted == 1
-              ? SizeConfig.screenHeight * 0.55
-              : SizeConfig.screenHeight * 0.75)
+              ? sizeConfig.screenHeight * 0.55
+              : sizeConfig.screenHeight * 0.75)
           : (task.isCompleted == 1
-              ? SizeConfig.screenHeight * 0.25
-              : SizeConfig.screenHeight * 0.35),
+              ? sizeConfig.screenHeight * 0.25
+              : sizeConfig.screenHeight * 0.35),
       decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.6),
           borderRadius: const BorderRadius.only(

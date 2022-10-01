@@ -9,7 +9,8 @@ import 'package:todo_clean_architecture/core/utils/global/themes/theme/dark.dart
 import 'package:todo_clean_architecture/core/utils/global/themes/theme/light.dart';
 import 'package:todo_clean_architecture/core/utils/global/themes/theme_sevice.dart';
 import 'package:todo_clean_architecture/data/datasource/local/sql.dart';
-import 'package:todo_clean_architecture/presentation/screens/home_screen.dart';
+import 'package:todo_clean_architecture/presentation/screens/home_screen_desktop.dart';
+import 'package:todo_clean_architecture/presentation/screens/home_screen_mobile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +35,14 @@ class MyApp extends StatelessWidget {
       theme: LightTheme.light,
       darkTheme: DarkTheme.dark,
       themeMode: ThemeService().theme,
-      home: const HomeScreen(),
+      home: LayoutBuilder(
+        builder: (context, constrain) {
+          if (constrain.minWidth.toInt() >= 400)
+            return HomeScreenDesktop();
+          else
+            return HomeScreen();
+        },
+      ),
     );
   }
 }

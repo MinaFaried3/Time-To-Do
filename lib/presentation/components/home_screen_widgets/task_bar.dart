@@ -14,6 +14,7 @@ class TaskBar extends StatelessWidget {
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               DateFormat.yMMMMd().format(DateTime.now()),

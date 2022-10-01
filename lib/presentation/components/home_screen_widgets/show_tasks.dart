@@ -36,49 +36,56 @@ class _ShowTasksState extends State<ShowTasks> {
       if (taskController.tasks.isEmpty) {
         return const NoTasks();
       } else {
-        return ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          reverse: true,
-          itemBuilder: (context, index) {
-            TaskModel task = taskController.tasks[index];
-            DateTime startTime = DateFormat.jm().parse(task.startTime!);
-            DateTime date = DateFormat.yMd().parse(task.date!);
-            DateTime selectedDate = taskController.selectedDate;
-            int hour = int.parse(
-                DateFormat("HH:mm").format(startTime).toString().split(':')[0]);
-            int minute = int.parse(
-                DateFormat("HH:mm").format(startTime).toString().split(':')[1]);
-            bool isSelectedDate =
-                (task.date == DateFormat.yMd().format(selectedDate));
-            bool isDaily = (task.repeat == 'Daily');
-            bool isWeekly = (task.repeat == 'Weekly' &&
-                selectedDate.difference(date).inDays % 7 == 0);
-            bool isMonthly =
-                (task.repeat == 'Monthly' && date.day == selectedDate.day);
+        return Align(
+          alignment: AlignmentDirectional.topCenter,
+          child: ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            reverse: true,
+            itemBuilder: (context, index) {
+              TaskModel task = taskController.tasks[index];
+              DateTime startTime = DateFormat.jm().parse(task.startTime!);
+              DateTime date = DateFormat.yMd().parse(task.date!);
+              DateTime selectedDate = taskController.selectedDate;
+              int hour = int.parse(DateFormat("HH:mm")
+                  .format(startTime)
+                  .toString()
+                  .split(':')[0]);
+              int minute = int.parse(DateFormat("HH:mm")
+                  .format(startTime)
+                  .toString()
+                  .split(':')[1]);
+              bool isSelectedDate =
+                  (task.date == DateFormat.yMd().format(selectedDate));
+              bool isDaily = (task.repeat == 'Daily');
+              bool isWeekly = (task.repeat == 'Weekly' &&
+                  selectedDate.difference(date).inDays % 7 == 0);
+              bool isMonthly =
+                  (task.repeat == 'Monthly' && date.day == selectedDate.day);
 
-            notificationService.scheduledNotification(hour, minute, task);
-            if (isSelectedDate || isDaily || isWeekly || isMonthly) {
-              return AnimationConfiguration.staggeredList(
-                position: index,
-                duration: const Duration(milliseconds: 900),
-                child: SlideAnimation(
-                  horizontalOffset: 300,
-                  child: FadeInAnimation(
-                    child: GestureDetector(
-                      onTap: () async {
-                        await showTaskBottomSheet(context, task);
-                      },
-                      child: TaskTile(task),
+              notificationService.scheduledNotification(hour, minute, task);
+              if (isSelectedDate || isDaily || isWeekly || isMonthly) {
+                return AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: const Duration(milliseconds: 900),
+                  child: SlideAnimation(
+                    horizontalOffset: 300,
+                    child: FadeInAnimation(
+                      child: GestureDetector(
+                        onTap: () async {
+                          await showTaskBottomSheet(context, task);
+                        },
+                        child: TaskTile(task),
+                      ),
                     ),
                   ),
-                ),
-              );
-            } else {
-              return SizedBox();
-            }
-          },
-          itemCount: taskController.tasks.length,
+                );
+              } else {
+                return SizedBox();
+              }
+            },
+            itemCount: taskController.tasks.length,
+          ),
         );
       }
     });
