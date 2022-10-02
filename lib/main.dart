@@ -37,7 +37,8 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeService().theme,
       home: LayoutBuilder(
         builder: (context, constrain) {
-          if (constrain.minWidth.toInt() >= 395)
+          print(constrain.maxWidth.toInt());
+          if (constrain.minWidth.toInt() >= 412)
             return HomeScreenDesktop();
           else
             return MobileHomeScreen();

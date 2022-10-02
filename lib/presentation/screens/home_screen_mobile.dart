@@ -80,7 +80,7 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: sizeConfig.bodyHeight * 0.15,
+                    height: sizeConfig.bodyHeight * 0.17,
                     child: Padding(
                       padding:
                           EdgeInsets.only(left: sizeConfig.screenWidth * 0.02),

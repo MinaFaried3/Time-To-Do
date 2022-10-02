@@ -43,7 +43,7 @@ class LightTheme extends Equatable {
       ),
       bodyText2: GoogleFonts.lato(
         textStyle: TextStyle(
-          color: Colors.grey[700],
+          color: Colors.grey[800],
           fontWeight: FontWeight.w400,
           fontSize: 16,
         ),

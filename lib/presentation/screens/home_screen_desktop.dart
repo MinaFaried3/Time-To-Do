@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_clean_architecture/presentation/components/home_screen_widgets/show_task_grid.dart';
 import 'package:todo_clean_architecture/presentation/screens/add_task_screen.dart';
 
@@ -40,48 +41,68 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
         child: Row(
           children: [
             SizedBox(
-              child: Column(
-                children: [
-                  Avatar(
-                    radius: sizeConfig.screenWidth * 0.02,
-                  ),
-                  IconButton(
-                      onPressed: () async {
-                        await taskController.deleteAll();
-                        await notificationService.cancelAllNotification();
-                      },
+              width: sizeConfig.screenHeight * 0.29,
+              child: Padding(
+                padding: EdgeInsets.all(sizeConfig.screenHeight * 0.03),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Avatar(
+                          radius: sizeConfig.screenWidth * 0.02,
+                        ),
+                        IconButton(
+                            onPressed: () async {
+                              await Get.to(() => const AddTaskScreen());
+                            },
+                            icon: Icon(Icons.add_outlined,
+                                color: Theme.of(context).primaryColor))
+                      ],
+                    ),
+                    IconButton(
+                        onPressed: () async {
+                          await taskController.deleteAll();
+                          await notificationService.cancelAllNotification();
+                        },
+                        icon: Icon(
+                          Icons.cleaning_services_rounded,
+                          color: Theme.of(context).primaryColor,
+                        )),
+                    IconButton(
                       icon: Icon(
-                        Icons.cleaning_services_rounded,
-                        color: Theme.of(context).primaryColor,
-                      )),
-                  IconButton(
-                    icon: Icon(
-                        Get.isDarkMode ? Icons.dark_mode_outlined : Icons.light,
-                        color: Theme.of(context).primaryColor),
-                    onPressed: () async {
-                      ThemeService().switchTheme();
-                      setState(() {});
-                      await taskController.getTasks();
-                    },
-                  ),
-                  Spacer(),
-                  IconButton(
+                          Get.isDarkMode
+                              ? Icons.dark_mode_outlined
+                              : Icons.light,
+                          color: Theme.of(context).primaryColor),
                       onPressed: () async {
-                        await Get.to(() => const AddTaskScreen());
+                        ThemeService().switchTheme();
+                        setState(() {});
+                        await taskController.getTasks();
                       },
-                      icon: Icon(Icons.add_outlined,
-                          color: Theme.of(context).primaryColor))
-                ],
+                    ),
+                    const Spacer(),
+                    Text(
+                      "Today",
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                    Text(
+                      DateFormat.yMMMMd().format(DateTime.now()),
+                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: Get.isDarkMode ? Colors.white : Colors.black),
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(
-              width: sizeConfig.screenWidth * 0.08,
+              width: sizeConfig.screenWidth * 0.09,
               child: const DatePikerBar(
                 axis: Axis.vertical,
               ),
             ),
             SizedBox(
-                width: sizeConfig.screenWidth * 0.7,
+                width: sizeConfig.screenWidth * 0.768,
                 child: const GridShowTasks())
           ],
         ),
