@@ -27,4 +27,5 @@ check notifications singletone
 create home expanded
 add delete all tasks
 Unhandled Exception: type 'int' is not a subtype of type 'String?'
-scroll color
+scroll edge color
+change status color while changing theme

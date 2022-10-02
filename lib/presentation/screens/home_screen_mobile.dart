@@ -11,14 +11,14 @@ import '../components/home_screen_widgets/show_tasks.dart';
 import '../components/home_screen_widgets/task_bar.dart';
 import '../controller/task_controller.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class MobileHomeScreen extends StatefulWidget {
+  const MobileHomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<MobileHomeScreen> createState() => _MobileHomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _MobileHomeScreenState extends State<MobileHomeScreen> {
   final TaskController taskController = Get.put(getIt<TaskController>());
   late NotificationService notificationService;
   @override
@@ -88,7 +88,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: sizeConfig.bodyHeight * 0.73,
                     child: Padding(
                       padding:
                           EdgeInsets.only(top: sizeConfig.bodyHeight * 0.02),

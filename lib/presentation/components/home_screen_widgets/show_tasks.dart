@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_clean_architecture/core/services/service_locator.dart';
+import 'package:todo_clean_architecture/core/utils/global/shared/size_config.dart';
 import 'package:todo_clean_architecture/presentation/components/home_screen_widgets/no_task.dart';
 import 'package:todo_clean_architecture/presentation/components/task_tile.dart';
 
@@ -31,7 +32,7 @@ class _ShowTasksState extends State<ShowTasks> {
 
   @override
   Widget build(BuildContext context) {
-    var themes = Theme.of(context);
+    final sizeConfig = SizeConfig(context);
     return Obx(() {
       if (taskController.tasks.isEmpty) {
         return const NoTasks();
@@ -75,7 +76,13 @@ class _ShowTasksState extends State<ShowTasks> {
                         onTap: () async {
                           await showTaskBottomSheet(context, task);
                         },
-                        child: TaskTile(task),
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              right: sizeConfig.screenWidth * 0.016,
+                              bottom: sizeConfig.screenWidth * 0.009,
+                              left: sizeConfig.screenWidth * 0.009),
+                          child: TaskTile(task),
+                        ),
                       ),
                     ),
                   ),

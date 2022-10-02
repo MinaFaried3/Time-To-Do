@@ -1,4 +1,3 @@
-import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -6,8 +5,13 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:todo_clean_architecture/core/services/service_locator.dart';
 import 'package:todo_clean_architecture/presentation/controller/task_controller.dart';
 
+import '../../../core/utils/global/shared/size_config.dart';
+import '../date-piker_verical/picker.dart';
+
 class DatePikerBar extends StatefulWidget {
-  const DatePikerBar({Key? key}) : super(key: key);
+  const DatePikerBar({Key? key, this.axis = Axis.horizontal}) : super(key: key);
+
+  final Axis axis;
 
   @override
   State<DatePikerBar> createState() => _DatePikerBarState();
@@ -17,6 +21,9 @@ class _DatePikerBarState extends State<DatePikerBar> {
   TaskController taskController = Get.put(getIt<TaskController>());
   @override
   Widget build(BuildContext context) {
+    final sizeConfig = SizeConfig(context);
+    sizeConfig.setBodyHeight(context,
+        statusBarHeight: SizeConfig.mediaQueryData.padding.top);
     return StatefulBuilder(
       builder: (context, state) => PhysicalModel(
         borderRadius: BorderRadius.circular(20),
@@ -27,7 +34,8 @@ class _DatePikerBarState extends State<DatePikerBar> {
             : Theme.of(context).scaffoldBackgroundColor,
         child: DatePicker(
           DateTime.now(),
-          height: 100,
+          height: sizeConfig.isLandScape() ? double.infinity : 100,
+          axis: widget.axis,
           width: 60,
           initialSelectedDate: taskController.selectedDate,
           selectedTextColor: Colors.white,

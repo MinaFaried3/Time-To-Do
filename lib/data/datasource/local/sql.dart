@@ -7,7 +7,7 @@ class DatabaseService extends Equatable {
   static Database? database;
   static const String tableName = 'tasks';
 
-  static Future<void> initDB() async {
+  static Future<Database?> initDB() async {
     if (database != null) {
       printK("database is already created");
     } else {
@@ -28,10 +28,12 @@ class DatabaseService extends Equatable {
               'color INTEGER, '
               'isCompleted INTEGER)');
         });
+        return database!;
       } catch (e) {
         printK(e.toString());
       }
     }
+    return null;
   }
 
   @override

@@ -8,6 +8,7 @@ class LightTheme extends Equatable {
   static final ThemeData light = ThemeData(
     primaryColor: AppColor.primaryClr,
     backgroundColor: Colors.white,
+    scaffoldBackgroundColor: Colors.white,
     brightness: Brightness.light,
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.white,

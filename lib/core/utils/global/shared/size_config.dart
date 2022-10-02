@@ -17,6 +17,10 @@ class SizeConfig {
     bodyHeight = screenHeight;
   }
 
+  bool isLandScape() {
+    return orientation == Orientation.landscape ? true : false;
+  }
+
   void setBodyHeight(
     BuildContext context, {
     double appBarHeight = 0,

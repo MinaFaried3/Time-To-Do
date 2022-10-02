@@ -31,7 +31,7 @@ class TaskModel extends Task {
   factory TaskModel.fromJson(Map<String, dynamic> json) {
     return TaskModel(
       id: json['id'],
-      title: json['title'],
+      title: json['title'].toString(),
       note: json['note'],
       isCompleted: json['isCompleted'],
       date: json['date'],
