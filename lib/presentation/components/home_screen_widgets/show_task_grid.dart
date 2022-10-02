@@ -34,16 +34,25 @@ class _GridShowTasksState extends State<GridShowTasks> {
     final sizeConfig = SizeConfig(context);
     return Obx(() {
       if (taskController.tasks.isEmpty) {
-        return const NoTasks();
+        return const Center(child: NoTasks());
       } else {
         return Align(
           alignment: AlignmentDirectional.topCenter,
-          child: GridView.count(
-              crossAxisCount: 2,
-              childAspectRatio:
-                  sizeConfig.screenWidth / (sizeConfig.bodyHeight / 1),
+          child: RefreshIndicator(
+            onRefresh: () async {
+              await taskController.getTasks();
+            },
+            color: Theme.of(context).primaryColor,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            child: GridView.builder(
               physics: const BouncingScrollPhysics(),
-              children: List.generate(taskController.tasks.length, (index) {
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio:
+                    sizeConfig.screenWidth / (sizeConfig.bodyHeight / 0.9),
+              ),
+              itemCount: taskController.tasks.length,
+              itemBuilder: (context, index) {
                 TaskModel task = taskController.tasks[index];
                 DateTime startTime = DateFormat.jm().parse(task.startTime!);
                 DateTime date = DateFormat.yMd().parse(task.date!);
@@ -65,32 +74,42 @@ class _GridShowTasksState extends State<GridShowTasks> {
                     (task.repeat == 'Monthly' && date.day == selectedDate.day);
 
                 notificationService.scheduledNotification(hour, minute, task);
-                if (isSelectedDate || isDaily || isWeekly || isMonthly) {
-                  return AnimationConfiguration.staggeredList(
-                    position: index,
-                    duration: const Duration(milliseconds: 900),
-                    child: SlideAnimation(
-                      horizontalOffset: 300,
-                      child: FadeInAnimation(
-                        child: GestureDetector(
-                          onTap: () async {
-                            await showTaskBottomSheet(context, task);
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                right: sizeConfig.screenWidth * 0.016,
-                                bottom: sizeConfig.screenWidth * 0.009,
-                                left: sizeConfig.screenWidth * 0.009),
-                            child: TaskTile(task),
-                          ),
+
+                return AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: const Duration(milliseconds: 900),
+                  child: SlideAnimation(
+                    horizontalOffset: 300,
+                    child: FadeInAnimation(
+                      child: GestureDetector(
+                        onTap: () async {
+                          await showTaskBottomSheet(context, task);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              right: sizeConfig.screenWidth * 0.016,
+                              bottom: sizeConfig.screenWidth * 0.009,
+                              left: sizeConfig.screenWidth * 0.009),
+                          child: (isSelectedDate ||
+                                  isDaily ||
+                                  isWeekly ||
+                                  isMonthly)
+                              ? TaskTile(task)
+                              : Opacity(
+                                  opacity: 0.4,
+                                  child: TaskTile(
+                                    task,
+                                    toDayTask: false,
+                                  ),
+                                ),
                         ),
                       ),
                     ),
-                  );
-                } else {
-                  return const SizedBox();
-                }
-              })),
+                  ),
+                );
+              },
+            ),
+          ),
         );
       }
     });

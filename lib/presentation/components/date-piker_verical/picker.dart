@@ -134,6 +134,7 @@ class _DatePickerState extends State<DatePicker> {
     return Container(
       height: widget.height,
       child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
         itemCount: widget.daysCount,
         scrollDirection: widget.axis,
         controller: _controller,

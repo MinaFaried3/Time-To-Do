@@ -36,7 +36,7 @@ class _DatePikerBarState extends State<DatePikerBar> {
           DateTime.now(),
           height: sizeConfig.isLandScape() ? double.infinity : 100,
           axis: widget.axis,
-          width: 60,
+          width: sizeConfig.screenWidth * 0.17,
           initialSelectedDate: taskController.selectedDate,
           selectedTextColor: Colors.white,
           deactivatedColor: Colors.black,

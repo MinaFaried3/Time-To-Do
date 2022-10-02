@@ -65,6 +65,7 @@ class _ShowTasksState extends State<ShowTasks> {
                   (task.repeat == 'Monthly' && date.day == selectedDate.day);
 
               notificationService.scheduledNotification(hour, minute, task);
+
               if (isSelectedDate || isDaily || isWeekly || isMonthly) {
                 return AnimationConfiguration.staggeredList(
                   position: index,

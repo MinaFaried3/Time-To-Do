@@ -6,8 +6,10 @@ import 'package:todo_clean_architecture/core/utils/global/themes/colors/colors.d
 import 'package:todo_clean_architecture/data/model/task_model.dart';
 
 class TaskTile extends StatelessWidget {
-  const TaskTile(this.task, {Key? key}) : super(key: key);
+  const TaskTile(this.task, {Key? key, this.toDayTask = true})
+      : super(key: key);
   final TaskModel task;
+  final bool toDayTask;
   @override
   Widget build(BuildContext context) {
     final sizeConfig = SizeConfig(context);
@@ -109,23 +111,17 @@ class TaskTile extends StatelessWidget {
     );
   }
 
-  getClr(int? color) {
+  Color getClr(int? color) {
     Map colors = {
       0: AppColor.bluishClr,
       1: AppColor.pinkClr,
       2: AppColor.orangeClr
     };
 
-    return colors[color];
+    return toDayTask ? colors[color] : Colors.grey;
   }
 
   getShadow(int? color, double opacity) {
-    Map colors = {
-      0: AppColor.bluishClr.withOpacity(opacity),
-      1: AppColor.pinkClr.withOpacity(opacity),
-      2: AppColor.orangeClr.withOpacity(opacity)
-    };
-
-    return colors[color];
+    return getClr(color).withOpacity(opacity);
   }
 }
