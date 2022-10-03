@@ -61,8 +61,8 @@ class DatePicker extends StatefulWidget {
 
   final Axis axis;
 
-  DatePicker(this.startDate,
-      {Key? key,
+  const DatePicker(this.startDate,
+      {super.key,
       this.width = 60,
       this.height = 80,
       this.controller,
@@ -131,7 +131,7 @@ class _DatePickerState extends State<DatePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: widget.height,
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
@@ -194,8 +194,9 @@ class _DatePickerState extends State<DatePicker> {
                     : widget.dayTextStyle,
             width: widget.width,
             locale: widget.locale,
-            selectionColor:
-                isSelected ? widget.selectionColor : Colors.transparent,
+            selectionColor: isSelected
+                ? widget.selectionColor
+                : Theme.of(context).scaffoldBackgroundColor,
             onDateSelected: (selectedDate) {
               // Don't notify listener if date is deactivated
               if (isDeactivated) return;

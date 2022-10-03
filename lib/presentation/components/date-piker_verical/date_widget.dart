@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_clean_architecture/core/utils/global/shared/size_config.dart';
 
 import 'tap.dart';
 
@@ -24,33 +25,53 @@ class DateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sizeConfig = SizeConfig(context);
     return InkWell(
       child: Container(
-        width: width,
-        margin: EdgeInsets.all(3.0),
+        margin: EdgeInsets.symmetric(
+            horizontal: sizeConfig.isLandScape() ? 13 : 6,
+            vertical: sizeConfig.isLandScape() ? 6 : 14),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-          color: selectionColor,
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                  new DateFormat("MMM", locale)
-                      .format(date)
-                      .toUpperCase(), // Month
-                  style: monthTextStyle),
-              Text(date.day.toString(), // Date
-                  style: dateTextStyle),
-              Text(
-                  new DateFormat("E", locale)
-                      .format(date)
-                      .toUpperCase(), // WeekDay
-                  style: dayTextStyle)
-            ],
+            color: Colors.white,
+            borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+            boxShadow: [
+              BoxShadow(
+                  color: selectionColor.withOpacity(0.6),
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                  offset: const Offset(4, 5)),
+            ]),
+        child: Container(
+          width: width,
+          margin: const EdgeInsets.all(1.0),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+            color: selectionColor,
+            gradient: LinearGradient(
+                colors: [selectionColor.withOpacity(0.6), selectionColor],
+                begin: AlignmentDirectional.topStart,
+                end: AlignmentDirectional.bottomEnd),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                    DateFormat("MMM", locale)
+                        .format(date)
+                        .toUpperCase(), // Month
+                    style: monthTextStyle),
+                Text(date.day.toString(), // Date
+                    style: dateTextStyle),
+                Text(
+                    DateFormat("E", locale)
+                        .format(date)
+                        .toUpperCase(), // WeekDay
+                    style: dayTextStyle)
+              ],
+            ),
           ),
         ),
       ),

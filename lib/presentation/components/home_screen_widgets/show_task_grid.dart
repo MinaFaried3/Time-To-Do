@@ -34,7 +34,7 @@ class _GridShowTasksState extends State<GridShowTasks> {
     final sizeConfig = SizeConfig(context);
     return Obx(() {
       if (taskController.tasks.isEmpty) {
-        return const Center(child: NoTasks());
+        return const NoTasks();
       } else {
         return Align(
           alignment: AlignmentDirectional.topCenter,

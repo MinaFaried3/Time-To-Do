@@ -55,7 +55,7 @@ class DarkTheme extends Equatable {
         textStyle: const TextStyle(
           color: Colors.grey,
           fontWeight: FontWeight.bold,
-          fontSize: 16,
+          fontSize: 14,
         ),
       ),
       subtitle2: GoogleFonts.lato(

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:todo_clean_architecture/core/utils/global/shared/shared.dart';
 
 import '../../data/model/task_model.dart';
 import '../../domain/usecases/completed_task_usecase.dart';
@@ -19,9 +20,9 @@ class TaskController extends GetxController {
   RxList<TaskModel> tasks = <TaskModel>[].obs;
 
   Future<void> getTasks() async {
-    List<Map<String, dynamic>> result = await _getQueryUseCase();
-
-    tasks.assignAll(result.map((e) => TaskModel.fromJson(e)).toList());
+    final result = await _getQueryUseCase();
+    result.fold((l) => printK(l.failureMessage),
+        (r) => tasks.assignAll(r.map((e) => TaskModel.fromJson(e)).toList()));
   }
 
   Future<int> addTaskToDB({
@@ -47,28 +48,48 @@ class TaskController extends GetxController {
       color: color,
     );
 
-    int result = await _insertTaskUseCase(task);
+    final result = await _insertTaskUseCase(task);
 
-    await getTasks();
-    return result;
+    return result.fold((l) {
+      printK(l.failureMessage);
+      return -1;
+    }, (r) async {
+      await getTasks();
+      return r;
+    });
   }
 
   Future<int> deleteTask(TaskModel task) async {
-    final int result = await _deleteTaskUseCase(task);
-    await getTasks();
-    return result;
+    final result = await _deleteTaskUseCase(task);
+    return result.fold((l) {
+      printK(l.failureMessage);
+      return -1;
+    }, (r) async {
+      await getTasks();
+      return r;
+    });
   }
 
   Future<int> completeTask(int id) async {
-    final int result = await _completeTaskUseCase(id);
-    await getTasks();
-    return result;
+    final result = await _completeTaskUseCase(id);
+    return result.fold((l) {
+      printK(l.failureMessage);
+      return -1;
+    }, (r) async {
+      await getTasks();
+      return r;
+    });
   }
 
   Future<int> deleteAll() async {
-    final int result = await _deleteAllUseCase();
-    await getTasks();
-    return result;
+    final result = await _deleteAllUseCase();
+    return result.fold((l) {
+      printK(l.failureMessage);
+      return -1;
+    }, (r) async {
+      await getTasks();
+      return r;
+    });
   }
 
   DateTime selectedDate = DateTime.now();

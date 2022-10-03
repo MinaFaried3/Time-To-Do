@@ -40,6 +40,7 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
         child: Row(
           children: [
             SizedBox(
+              width: sizeConfig.screenWidth * 0.09,
               child: Column(
                 children: [
                   Avatar(
@@ -75,13 +76,13 @@ class _HomeScreenDesktopState extends State<HomeScreenDesktop> {
               ),
             ),
             SizedBox(
-              width: sizeConfig.screenWidth * 0.08,
+              width: sizeConfig.screenWidth * 0.12,
               child: const DatePikerBar(
                 axis: Axis.vertical,
               ),
             ),
             SizedBox(
-                width: sizeConfig.screenWidth * 0.7,
+                width: sizeConfig.screenWidth * 0.76,
                 child: const GridShowTasks())
           ],
         ),

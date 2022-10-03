@@ -1,15 +1,7 @@
 change app icon
 change decoration of drop down menu
-shared preferences
-create getter for theme for all app
-init date picker
-shadow datePiker in white theme
-Equatable all
 add special effects to the completed tasks
-singleton notification show tasks
 icon dark light theme
-handle errors
-get all tasks lazy load when add one task
 convert text fields to button
 animated icons ,text
 padding problems in home screen

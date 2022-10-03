@@ -1,13 +1,16 @@
+import 'package:dartz/dartz.dart';
+
+import '../../core/error/failure.dart';
 import '../../data/model/task_model.dart';
 
 abstract class BaseToDoRepository {
-  Future<int> insertTask(TaskModel task);
+  Future<Either<Failure, int>> insertTask(TaskModel task);
 
-  Future<int> deleteTask(TaskModel task);
+  Future<Either<Failure, int>> deleteTask(TaskModel task);
 
-  Future<int> deleteAll();
+  Future<Either<Failure, int>> deleteAll();
 
-  Future<List<Map<String, dynamic>>> getQueries();
+  Future<Either<Failure, List<Map<String, dynamic>>>> getQueries();
 
-  Future<int> completeTask(int id);
+  Future<Either<Failure, int>> completeTask(int id);
 }

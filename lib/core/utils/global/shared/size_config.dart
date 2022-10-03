@@ -1,11 +1,13 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-class SizeConfig {
+class SizeConfig extends Equatable {
   static late MediaQueryData mediaQueryData;
 
   late double screenWidth;
   late double screenHeight;
   late double bodyHeight;
+
   // late double defaultSize;
   late Orientation orientation;
 
@@ -28,6 +30,14 @@ class SizeConfig {
   }) {
     bodyHeight = screenHeight - appBarHeight - statusBarHeight;
   }
+
+  @override
+  List<Object> get props => [
+        screenHeight,
+        screenWidth,
+        bodyHeight,
+        orientation,
+      ];
 }
 
 // Get the proportionate height as per screen size

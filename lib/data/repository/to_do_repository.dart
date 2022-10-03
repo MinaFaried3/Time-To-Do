@@ -1,6 +1,9 @@
+import 'package:dartz/dartz.dart';
+import 'package:todo_clean_architecture/core/error/exceptions.dart';
 import 'package:todo_clean_architecture/data/datasource/local/local_datasource.dart';
 import 'package:todo_clean_architecture/domain/repository/base_to_do_repository.dart';
 
+import '../../core/error/failure.dart';
 import '../model/task_model.dart';
 
 class ToDoRepository extends BaseToDoRepository {
@@ -8,27 +11,55 @@ class ToDoRepository extends BaseToDoRepository {
   ToDoRepository(this.baseLocalDataSource);
 
   @override
-  Future<int> insertTask(TaskModel task) async {
-    return await baseLocalDataSource.insertTask(task);
+  Future<Either<Failure, int>> insertTask(TaskModel task) async {
+    final result = await baseLocalDataSource.insertTask(task);
+    try {
+      return Right(result);
+    } on LocalDataBaseException catch (failure) {
+      return Left(LocalFailure(failure.errorMessage));
+    }
   }
 
   @override
-  Future<int> deleteTask(TaskModel task) async {
-    return await baseLocalDataSource.deleteTask(task);
+  Future<Either<Failure, int>> deleteTask(TaskModel task) async {
+    final result = await baseLocalDataSource.deleteTask(task);
+
+    try {
+      return Right(result);
+    } on LocalDataBaseException catch (failure) {
+      return Left(LocalFailure(failure.errorMessage));
+    }
   }
 
   @override
-  Future<int> deleteAll() async {
-    return await baseLocalDataSource.deleteAll();
+  Future<Either<Failure, int>> deleteAll() async {
+    final result = await baseLocalDataSource.deleteAll();
+
+    try {
+      return Right(result);
+    } on LocalDataBaseException catch (failure) {
+      return Left(LocalFailure(failure.errorMessage));
+    }
   }
 
   @override
-  Future<List<Map<String, dynamic>>> getQueries() async {
-    return await baseLocalDataSource.getQueries();
+  Future<Either<Failure, List<Map<String, dynamic>>>> getQueries() async {
+    final result = await baseLocalDataSource.getQueries();
+    try {
+      return Right(result);
+    } on LocalDataBaseException catch (failure) {
+      return Left(LocalFailure(failure.errorMessage));
+    }
   }
 
   @override
-  Future<int> completeTask(int id) async {
-    return await baseLocalDataSource.completeTask(id);
+  Future<Either<Failure, int>> completeTask(int id) async {
+    final result = await baseLocalDataSource.completeTask(id);
+
+    try {
+      return Right(result);
+    } on LocalDataBaseException catch (failure) {
+      return Left(LocalFailure(failure.errorMessage));
+    }
   }
 }

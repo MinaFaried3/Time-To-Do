@@ -87,12 +87,8 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
                       child: const DatePikerBar(),
                     ),
                   ),
-                  SizedBox(
-                    child: Padding(
-                      padding:
-                          EdgeInsets.only(top: sizeConfig.bodyHeight * 0.02),
-                      child: const ShowTasks(),
-                    ),
+                  const SizedBox(
+                    child: ShowTasks(),
                   )
                 ],
               ),
