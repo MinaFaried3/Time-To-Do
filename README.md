@@ -27,6 +27,9 @@ Todo app with Clean Architecture and GetX
  <video src="images/preview.mp4" controls="controls" style="max-width: 730px;">
 </video>
 
+https://user-images.githubusercontent.com/103784652/210138094-45c5265a-8910-448d-8387-72b8702141d4.mp4
+
+
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
