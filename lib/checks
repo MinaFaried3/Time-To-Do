@@ -4,16 +4,8 @@ add special effects to the completed tasks
 icon dark light theme
 convert text fields to button
 animated icons ,text
-padding problems in home screen
-index problem
 add repeated to view
-check notifications for end time
 solve date loaded using where function
 change strings to enum
 create object to less heavy from main listView
-check notifications singletone
-create home expanded
-add delete all tasks
-Unhandled Exception: type 'int' is not a subtype of type 'String?'
 scroll edge color
-change status color while changing theme
