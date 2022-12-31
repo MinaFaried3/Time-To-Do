@@ -1,16 +1,37 @@
-# todo_clean_architecture
+# Time To Do
 
-A new Flutter project.
+Todo app with Clean Architecture and GetX
 
 ## Getting Started
+<h3 align="left">Languages and Tools:</h3>
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+  <a href="https://dart.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/dartlang/dartlang-icon.svg" alt="dart" width="40" height="40"/> </a>  <a href="https://flutter.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" alt="flutter" width="40" height="40"/> </a> 
+ #### In this project we use :
+*   get_it
+*   get_storage
+*   get
+*   equatable
+*   flutter_local_notifications
+*    intl
+*    flutter_native_timezone
+*    google_fonts
+*  date_picker_timeline 
+*  sqflite 
+*  flutter_staggered_animations 
+*  flutter_svg 
+*  rxdart 
+*  dartz 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Preview Video
+ <video src="images/preview.mp4" controls="controls" style="max-width: 730px;">
+</video>
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+<h3 align="left">Connect with me:</h3>
+<p align="left">
+<a href="https://twitter.com/mina_eldihabi" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="mina_eldihabi" height="30" width="40" /></a>
+<a href="https://linkedin.com/in/minafaried" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="minafaried" height="30" width="40" /></a>
+<a href="https://fb.com/mina.f.eldihabi" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/facebook.svg" alt="mina.f.eldihabi" height="30" width="40" /></a>
+<a href="https://instagram.com/mino_f.eldihabi" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="mino_f.eldihabi" height="30" width="40" /></a>
+</p>
